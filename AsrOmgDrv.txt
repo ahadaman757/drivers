@@ -1,0 +1,590 @@
+__int64 __fastcall sub_110A8(__int64 a1, IRP *a2)
+{
+  struct _IO_STACK_LOCATION *CurrentStackLocation; // rax
+  unsigned int *MasterIrp; // rsi
+  __int64 v4; // rcx
+  __int64 LowPart; // r8
+  int v7; // r8d
+  int v8; // r8d
+  int v9; // r8d
+  int v10; // r8d
+  int v11; // r8d
+  int v12; // r8d
+  int v13; // r8d
+  unsigned __int32 v14; // eax
+  unsigned __int16 v15; // ax
+  unsigned __int8 v16; // al
+  PVOID v17; // rax
+  void *v18; // r11
+  int v19; // eax
+  int *v20; // rdx
+  unsigned int v21; // r8d
+  _DWORD *v22; // rcx
+  unsigned int v23; // eax
+  unsigned int v24; // eax
+  int v25; // eax
+  __int16 v26; // ax
+  int v27; // eax
+  PVOID v28; // rax
+  void *v29; // r11
+  int v30; // eax
+  _DWORD *v31; // rdx
+  unsigned int v32; // r8d
+  int *v33; // rcx
+  unsigned int v34; // eax
+  unsigned int v35; // eax
+  int v36; // eax
+  __int16 v37; // ax
+  int v38; // eax
+  unsigned int v39; // eax
+  int v40; // r10d
+  int v41; // r9d
+  int v42; // edx
+  int v43; // r8d
+  int v44; // r8d
+  int v45; // r8d
+  int v46; // r8d
+  int v47; // r8d
+  int v48; // r8d
+  int v49; // r8d
+  int v50; // r11d
+  int v51; // eax
+  unsigned __int64 v52; // rax
+  unsigned int v53; // r10d
+  int v54; // r8d
+  int v55; // ecx
+  int v56; // eax
+  unsigned int v57; // eax
+  int v58; // r10d
+  int v59; // r9d
+  int v60; // edx
+  unsigned __int32 v61; // eax
+  unsigned int v62; // r10d
+  int v63; // r8d
+  int v64; // ecx
+  int v65; // eax
+  unsigned int v66; // eax
+  int v67; // r10d
+  int v68; // r9d
+  int v69; // edx
+  unsigned int v70; // r10d
+  int v71; // r8d
+  int v72; // ecx
+  int v73; // eax
+  int v74; // eax
+  int v75; // r8d
+  int v76; // r8d
+  int v77; // r8d
+  int v78; // r8d
+  int v79; // r8d
+  int v80; // r8d
+  int v81; // r8d
+  int v82; // eax
+  __int64 v83; // r9
+  unsigned __int8 *v84; // rsi
+  unsigned __int16 v85; // r10
+  unsigned int v86; // eax
+  unsigned __int32 v87; // eax
+  unsigned __int64 CurrentIrql; // rax
+  int v89; // eax
+  unsigned __int32 v90; // eax
+  unsigned __int32 v91; // ebx
+  unsigned __int64 v92; // rdi
+  unsigned __int32 v93; // eax
+  unsigned int v94; // r8d
+  unsigned __int64 v95; // rax
+  unsigned __int64 v96; // rax
+  int v97; // eax
+  int v98; // eax
+  unsigned int Status; // ebx
+
+  CurrentStackLocation = a2->Tail.Overlay.CurrentStackLocation;
+  MasterIrp = (unsigned int *)a2->AssociatedIrp.MasterIrp;
+  a2->IoStatus.Status = 0;
+  a2->IoStatus.Information = 0i64;
+  v4 = *(_QWORD *)(a1 + 64);
+  if ( CurrentStackLocation->MajorFunction != 14 )
+    goto LABEL_132;
+  LowPart = CurrentStackLocation->Parameters.Read.ByteOffset.LowPart;
+  if ( (unsigned int)LowPart > 0x222858 )
+  {
+    if ( (unsigned int)LowPart > 0x22287C )
+    {
+      switch ( (_DWORD)LowPart )
+      {
+        case 0x222880:
+          v98 = sub_11F48(MasterIrp);
+          a2->IoStatus.Status = v98;
+          if ( v98 < 0 )
+            goto LABEL_132;
+          goto LABEL_131;
+        case 0x222884:
+          MmFreeContiguousMemorySpecifyCache(*((PVOID *)MasterIrp + 1), *MasterIrp, MmNonCached);
+          goto LABEL_132;
+        case 0x222888:
+          dword_14100 = *MasterIrp;
+          dword_14104 = MasterIrp[1];
+          dword_14108 = MasterIrp[2];
+          dword_1410C = MasterIrp[3];
+          dword_14110 = MasterIrp[4];
+          dword_14114 = MasterIrp[5];
+          *MasterIrp = sub_12500(v4);
+          goto LABEL_45;
+        case 0x22288C:
+        case 0x222890:
+          v19 = sub_122B4(v4, MasterIrp, LowPart, a2);
+          goto LABEL_32;
+        case 0x222894:
+          v97 = sub_11984(MasterIrp);
+          a2->IoStatus.Status = v97;
+          if ( v97 >= 0 )
+            a2->IoStatus.Information = 48i64;
+          goto LABEL_132;
+      }
+      if ( (_DWORD)LowPart != 2238616 )
+        goto LABEL_121;
+      v82 = sub_12388(MasterIrp);
+    }
+    else
+    {
+      if ( (_DWORD)LowPart != 2238588 )
+      {
+        v75 = LowPart - 2238556;
+        if ( !v75 )
+        {
+          _disable();
+          v90 = __indword(*((_WORD *)MasterIrp + 8));
+          v91 = v90;
+          v92 = __readmsr(*MasterIrp);
+          KeStallExecutionProcessor(MasterIrp[1]);
+          v93 = __indword(*((_WORD *)MasterIrp + 8));
+          v94 = v93 - v91;
+          v95 = __readmsr(*MasterIrp);
+          v96 = (((unsigned __int64)HIDWORD(v95) << 32) | (unsigned int)v95) - v92;
+          _enable();
+          if ( !*((_WORD *)MasterIrp + 9) )
+            v94 &= 0xFFFFFFu;
+          MasterIrp[1] = v94;
+          MasterIrp[3] = v96;
+          MasterIrp[2] = HIDWORD(v96);
+          a2->IoStatus.Status = 0;
+LABEL_124:
+          a2->IoStatus.Information = 32i64;
+          goto LABEL_132;
+        }
+        v76 = v75 - 4;
+        if ( !v76 )
+        {
+          v89 = sub_11FBC(MasterIrp);
+          a2->IoStatus.Status = v89;
+          if ( v89 >= 0 )
+            a2->IoStatus.Information = 520i64;
+          goto LABEL_132;
+        }
+        v77 = v76 - 4;
+        if ( !v77 )
+        {
+          *(_QWORD *)MasterIrp = __rdtsc();
+          goto LABEL_20;
+        }
+        v78 = v77 - 4;
+        if ( !v78 )
+        {
+          *((_QWORD *)MasterIrp + 1) = __readpmc(*MasterIrp);
+LABEL_131:
+          a2->IoStatus.Information = 16i64;
+          goto LABEL_132;
+        }
+        v79 = v78 - 4;
+        if ( !v79 )
+        {
+          a2->IoStatus.Information = 16i64;
+          if ( *MasterIrp )
+          {
+            switch ( *MasterIrp )
+            {
+              case 2u:
+                CurrentIrql = __readcr2();
+                break;
+              case 3u:
+                CurrentIrql = __readcr3();
+                break;
+              case 4u:
+                CurrentIrql = __readcr4();
+                break;
+              case 8u:
+                CurrentIrql = KeGetCurrentIrql();
+                break;
+              default:
+                a2->IoStatus.Information = 0i64;
+                a2->IoStatus.Status = -1073741823;
+                goto LABEL_132;
+            }
+          }
+          else
+          {
+            CurrentIrql = __readcr0();
+          }
+          *((_QWORD *)MasterIrp + 1) = CurrentIrql;
+          goto LABEL_132;
+        }
+        v80 = v79 - 4;
+        if ( !v80 )
+        {
+          if ( *MasterIrp )
+          {
+            switch ( *MasterIrp )
+            {
+              case 3u:
+                __writecr3(*((_QWORD *)MasterIrp + 1));
+                break;
+              case 4u:
+                __writecr4(*((_QWORD *)MasterIrp + 1));
+                break;
+              case 8u:
+                __writecr8(*((_QWORD *)MasterIrp + 1));
+                break;
+              default:
+                a2->IoStatus.Status = -1073741823;
+                break;
+            }
+          }
+          else
+          {
+            __writecr0(*((_QWORD *)MasterIrp + 1));
+          }
+          goto LABEL_132;
+        }
+        v81 = v80 - 4;
+        if ( !v81 )
+        {
+          _disable();
+          v83 = 2i64;
+          v84 = (unsigned __int8 *)MasterIrp + 1;
+          do
+          {
+            v85 = (*(_WORD *)(v84 + 3) & 3) + 3324;
+            v86 = (*(_WORD *)(v84 + 3) & 0xFC)
+                + ((v84[1]
+                  + 8 * (*v84 + 32 * (*(v84 - 1) + (((HIBYTE(*(unsigned __int16 *)(v84 + 3)) & 0xF) + 128) << 8)))) << 8);
+            if ( v84[2] == 1 )
+            {
+              __outdword(0xCF8u, v86);
+              v87 = __indword(v85);
+              *(_DWORD *)(v84 + 7) = v87;
+            }
+            else if ( v84[2] == 2 )
+            {
+              __outdword(0xCF8u, v86);
+              __outdword(v85, *(_DWORD *)(v84 + 7));
+            }
+            v84 += 12;
+            --v83;
+          }
+          while ( v83 );
+          _enable();
+          goto LABEL_20;
+        }
+        if ( v81 == 4 )
+        {
+          v82 = sub_11D84(MasterIrp);
+          goto LABEL_123;
+        }
+LABEL_121:
+        a2->IoStatus.Status = -1073741811;
+        goto LABEL_132;
+      }
+      v82 = sub_11E64(MasterIrp);
+    }
+LABEL_123:
+    a2->IoStatus.Status = v82;
+    if ( v82 < 0 )
+      goto LABEL_132;
+    goto LABEL_124;
+  }
+  if ( (_DWORD)LowPart == 2238552 )
+  {
+    v74 = sub_11AEC(MasterIrp);
+    a2->IoStatus.Status = v74;
+    if ( v74 >= 0 )
+      a2->IoStatus.Information = 516i64;
+    goto LABEL_132;
+  }
+  if ( (unsigned int)LowPart > 0x222830 )
+  {
+    v43 = LowPart - 2238516;
+    if ( v43 )
+    {
+      v44 = v43 - 4;
+      if ( !v44 )
+      {
+        v66 = *((unsigned __int16 *)MasterIrp + 2);
+        v67 = *((unsigned __int8 *)MasterIrp + 2);
+        v68 = *((unsigned __int8 *)MasterIrp + 1);
+        v69 = *(unsigned __int8 *)MasterIrp;
+        _disable();
+        __outdword(0xCF8u, (v66 & 0xFC) + ((v67 + 8 * (v68 + 32 * (v69 + ((((v66 >> 8) & 0xF) + 128) << 8)))) << 8));
+        LOWORD(v66) = __inword((v66 & 3) + 3324);
+        *((_WORD *)MasterIrp + 4) = v66;
+        goto LABEL_47;
+      }
+      v45 = v44 - 4;
+      if ( v45 )
+      {
+        v46 = v45 - 4;
+        if ( !v46 )
+        {
+          v57 = *((unsigned __int16 *)MasterIrp + 2);
+          v58 = *((unsigned __int8 *)MasterIrp + 2);
+          v59 = *((unsigned __int8 *)MasterIrp + 1);
+          v60 = *(unsigned __int8 *)MasterIrp;
+          _disable();
+          __outdword(0xCF8u, (v57 & 0xFC) + ((v58 + 8 * (v59 + 32 * (v60 + ((((v57 >> 8) & 0xF) + 128) << 8)))) << 8));
+          v61 = __indword((v57 & 3) + 3324);
+          MasterIrp[2] = v61;
+          goto LABEL_47;
+        }
+        v47 = v46 - 4;
+        if ( v47 )
+        {
+          v48 = v47 - 4;
+          if ( v48 )
+          {
+            v49 = v48 - 4;
+            if ( !v49 )
+            {
+              __writemsr(
+                MasterIrp[2],
+                __PAIR64__((*MasterIrp + ((unsigned __int64)MasterIrp[3] << 32)) >> 32, *MasterIrp));
+              goto LABEL_132;
+            }
+            if ( v49 != 4 )
+              goto LABEL_121;
+            dword_14100 = *MasterIrp;
+            dword_14104 = MasterIrp[1];
+            dword_14108 = MasterIrp[2];
+            dword_1410C = MasterIrp[3];
+            sub_12530(v4);
+            v50 = dword_14100;
+            MasterIrp[1] = dword_14104;
+            MasterIrp[2] = dword_14108;
+            v51 = dword_1410C;
+            *MasterIrp = v50;
+            MasterIrp[3] = v51;
+            a2->IoStatus.Status = 0;
+          }
+          else
+          {
+            v52 = __readmsr(MasterIrp[2]);
+            *MasterIrp = v52;
+            MasterIrp[3] = HIDWORD(v52);
+          }
+          goto LABEL_131;
+        }
+        v53 = *((unsigned __int16 *)MasterIrp + 2);
+        v54 = *((unsigned __int8 *)MasterIrp + 2);
+        v55 = *((unsigned __int8 *)MasterIrp + 1);
+        v56 = *(unsigned __int8 *)MasterIrp;
+        _disable();
+        __outdword(0xCF8u, (v53 & 0xFC) + ((v54 + 8 * (v55 + 32 * (v56 + ((((v53 >> 8) & 0xF) + 128) << 8)))) << 8));
+        __outdword((v53 & 3) + 3324, MasterIrp[2]);
+      }
+      else
+      {
+        v62 = *((unsigned __int16 *)MasterIrp + 2);
+        v63 = *((unsigned __int8 *)MasterIrp + 2);
+        v64 = *((unsigned __int8 *)MasterIrp + 1);
+        v65 = *(unsigned __int8 *)MasterIrp;
+        _disable();
+        __outdword(0xCF8u, (v62 & 0xFC) + ((v63 + 8 * (v64 + 32 * (v65 + ((((v62 >> 8) & 0xF) + 128) << 8)))) << 8));
+        __outword((v62 & 3) + 3324, *((_WORD *)MasterIrp + 4));
+      }
+    }
+    else
+    {
+      v70 = *((unsigned __int16 *)MasterIrp + 2);
+      v71 = *((unsigned __int8 *)MasterIrp + 2);
+      v72 = *((unsigned __int8 *)MasterIrp + 1);
+      v73 = *(unsigned __int8 *)MasterIrp;
+      _disable();
+      __outdword(0xCF8u, (v70 & 0xFC) + ((v71 + 8 * (v72 + 32 * (v73 + ((((v70 >> 8) & 0xF) + 128) << 8)))) << 8));
+      __outbyte((v70 & 3) + 3324, *((_BYTE *)MasterIrp + 8));
+    }
+    _enable();
+    goto LABEL_132;
+  }
+  if ( (_DWORD)LowPart == 2238512 )
+  {
+    v39 = *((unsigned __int16 *)MasterIrp + 2);
+    v40 = *((unsigned __int8 *)MasterIrp + 2);
+    v41 = *((unsigned __int8 *)MasterIrp + 1);
+    v42 = *(unsigned __int8 *)MasterIrp;
+    _disable();
+    __outdword(0xCF8u, (v39 & 0xFC) + ((v40 + 8 * (v41 + 32 * (v42 + ((((v39 >> 8) & 0xF) + 128) << 8)))) << 8));
+    LOBYTE(v39) = __inbyte((v39 & 3) + 3324);
+    *((_BYTE *)MasterIrp + 8) = v39;
+LABEL_47:
+    _enable();
+    a2->IoStatus.Information = 12i64;
+    goto LABEL_132;
+  }
+  v7 = LowPart - 2238472;
+  if ( v7 )
+  {
+    v8 = v7 - 4;
+    if ( v8 )
+    {
+      v9 = v8 - 4;
+      if ( v9 )
+      {
+        v10 = v9 - 4;
+        if ( !v10 )
+        {
+          __outbyte(*(_WORD *)MasterIrp, *((_BYTE *)MasterIrp + 4));
+          goto LABEL_132;
+        }
+        v11 = v10 - 4;
+        if ( v11 )
+        {
+          v12 = v11 - 4;
+          if ( !v12 )
+          {
+            __outword(*(_WORD *)MasterIrp, *((_WORD *)MasterIrp + 2));
+            goto LABEL_132;
+          }
+          v13 = v12 - 4;
+          if ( v13 )
+          {
+            if ( v13 == 4 )
+            {
+              __outdword(*(_WORD *)MasterIrp, MasterIrp[1]);
+              goto LABEL_132;
+            }
+            goto LABEL_121;
+          }
+          v14 = __indword(*(_WORD *)MasterIrp);
+          MasterIrp[1] = v14;
+        }
+        else
+        {
+          v15 = __inword(*(_WORD *)MasterIrp);
+          *((_WORD *)MasterIrp + 2) = v15;
+        }
+      }
+      else
+      {
+        v16 = __inbyte(*(_WORD *)MasterIrp);
+        *((_BYTE *)MasterIrp + 4) = v16;
+      }
+LABEL_20:
+      a2->IoStatus.Information = 8i64;
+      goto LABEL_132;
+    }
+    v17 = MmMapIoSpace(*(PHYSICAL_ADDRESS *)MasterIrp, MasterIrp[2], MmNonCached);
+    v18 = v17;
+    if ( v17 )
+    {
+      v20 = (int *)*((_QWORD *)MasterIrp + 2);
+      v21 = MasterIrp[2];
+      v22 = v17;
+      while ( v21 )
+      {
+        v23 = MasterIrp[3];
+        if ( v23 )
+        {
+          v24 = v23 - 1;
+          if ( v24 )
+          {
+            if ( v24 == 1 )
+            {
+              v25 = *v20++;
+              *v22++ = v25;
+              v21 -= 4;
+            }
+          }
+          else
+          {
+            v26 = *(_WORD *)v20;
+            v20 = (int *)((char *)v20 + 2);
+            *(_WORD *)v22 = v26;
+            v22 = (_DWORD *)((char *)v22 + 2);
+            v21 -= 2;
+          }
+        }
+        else
+        {
+          v27 = *(unsigned __int8 *)v20;
+          v20 = (int *)((char *)v20 + 1);
+          *(_BYTE *)v22 = v27;
+          v22 = (_DWORD *)((char *)v22 + 1);
+          --v21;
+        }
+      }
+      MmUnmapIoSpace(v18, MasterIrp[2]);
+      v19 = 0;
+    }
+    else
+    {
+      v19 = -1073741823;
+    }
+LABEL_32:
+    a2->IoStatus.Status = v19;
+    goto LABEL_132;
+  }
+  v28 = MmMapIoSpace(*(PHYSICAL_ADDRESS *)MasterIrp, MasterIrp[2], MmNonCached);
+  v29 = v28;
+  if ( v28 )
+  {
+    v31 = (_DWORD *)*((_QWORD *)MasterIrp + 2);
+    v32 = MasterIrp[2];
+    v33 = (int *)v28;
+    while ( v32 )
+    {
+      v34 = MasterIrp[3];
+      if ( v34 )
+      {
+        v35 = v34 - 1;
+        if ( v35 )
+        {
+          if ( v35 == 1 )
+          {
+            v36 = *v33++;
+            *v31++ = v36;
+            v32 -= 4;
+          }
+        }
+        else
+        {
+          v37 = *(_WORD *)v33;
+          v33 = (int *)((char *)v33 + 2);
+          *(_WORD *)v31 = v37;
+          v31 = (_DWORD *)((char *)v31 + 2);
+          v32 -= 2;
+        }
+      }
+      else
+      {
+        v38 = *(unsigned __int8 *)v33;
+        v33 = (int *)((char *)v33 + 1);
+        *(_BYTE *)v31 = v38;
+        v31 = (_DWORD *)((char *)v31 + 1);
+        --v32;
+      }
+    }
+    MmUnmapIoSpace(v29, MasterIrp[2]);
+    v30 = 0;
+  }
+  else
+  {
+    v30 = -1073741823;
+  }
+  a2->IoStatus.Status = v30;
+  if ( v30 >= 0 )
+LABEL_45:
+    a2->IoStatus.Information = 24i64;
+LABEL_132:
+  Status = a2->IoStatus.Status;
+  if ( Status != 259 )
+    IofCompleteRequest(a2, 0);
+  return Status;
+}
