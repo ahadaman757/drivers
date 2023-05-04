@@ -1,0 +1,134 @@
+__int64 __fastcall sub_11A10(__int64 a1, IRP *a2)
+{
+  BOOLEAN v4; // si
+  struct _IO_STACK_LOCATION *CurrentStackLocation; // rdx
+  NTSTATUS v6; // ebx
+  UCHAR MajorFunction; // al
+  unsigned int LowPart; // eax
+  void *Type; // rdx
+  __int64 v10; // rax
+  struct _IRP *MasterIrp; // rbx
+  PVOID ContiguousMemory; // rax
+  __int64 v14; // [rsp+20h] [rbp-38h]
+
+  v4 = IoIs32bitProcess(a2);
+  a2->IoStatus.Information = 0i64;
+  CurrentStackLocation = a2->Tail.Overlay.CurrentStackLocation;
+  v6 = -1073741822;
+  MajorFunction = CurrentStackLocation->MajorFunction;
+  if ( !CurrentStackLocation->MajorFunction || MajorFunction == 2 )
+  {
+LABEL_41:
+    v6 = 0;
+    goto LABEL_42;
+  }
+  if ( MajorFunction != 14 )
+    goto LABEL_42;
+  LowPart = CurrentStackLocation->Parameters.Read.ByteOffset.LowPart;
+  if ( LowPart > 0xA040A45C )
+  {
+    switch ( LowPart )
+    {
+      case 0xA040A460:
+        v6 = sub_110B0(a2);
+        if ( v6 >= 0 )
+          a2->IoStatus.Information = 8i64;
+        break;
+      case 0xA040A464:
+        v6 = sub_111C0(a2);
+        if ( v6 >= 0 )
+          a2->IoStatus.Information = 4i64;
+        break;
+      case 0xA040A480:
+        goto LABEL_35;
+      case 0xA040A488:
+        MasterIrp = a2->AssociatedIrp.MasterIrp;
+        ContiguousMemory = MmAllocateContiguousMemory(
+                             *(unsigned int *)&MasterIrp->Type,
+                             (PHYSICAL_ADDRESS)0xFFFFFFFFi64);
+        HIDWORD(v14) = (_DWORD)ContiguousMemory;
+        LODWORD(v14) = MmGetPhysicalAddress(ContiguousMemory).LowPart;
+        *(_QWORD *)&MasterIrp->Type = v14;
+        a2->IoStatus.Information = 8i64;
+        goto LABEL_41;
+      case 0xA040A48C:
+        goto LABEL_41;
+      case 0xA040A540:
+      case 0xA040A544:
+      case 0xA040A548:
+        v6 = sub_117C0(a2, CurrentStackLocation, v4);
+        break;
+      default:
+        goto LABEL_42;
+    }
+    goto LABEL_42;
+  }
+  if ( LowPart == -1606376356 )
+  {
+    v6 = sub_11120(a2);
+    if ( v6 >= 0 )
+      a2->IoStatus.Information = 8i64;
+    goto LABEL_42;
+  }
+  if ( LowPart > 0xA0406408 )
+  {
+    if ( LowPart == -1606392744 )
+    {
+      v6 = sub_11070(a2);
+      if ( v6 >= 0 )
+        a2->IoStatus.Information = 8i64;
+    }
+    else if ( LowPart == -1606376384 || LowPart == -1606376380 || LowPart == -1606376376 )
+    {
+      v6 = sub_113F0(a2, CurrentStackLocation, v4);
+    }
+    goto LABEL_42;
+  }
+  switch ( LowPart )
+  {
+    case 0xA0406408:
+LABEL_12:
+      v6 = sub_112C0(a2, CurrentStackLocation, v4);
+      break;
+    case 0xA040244C:
+LABEL_35:
+      v6 = sub_114F0(a1, a2, a2->Tail.Overlay.CurrentStackLocation, v4);
+      if ( v6 < 0 )
+      {
+        a2->IoStatus.Status = -1073741811;
+      }
+      else
+      {
+        v10 = 8i64;
+        if ( v4 )
+          v10 = 4i64;
+        a2->IoStatus.Information = v10;
+      }
+      break;
+    case 0xA0402450:
+      if ( v4 )
+      {
+        if ( CurrentStackLocation->Parameters.Create.Options >= 4 )
+        {
+          Type = (void *)a2->AssociatedIrp.MasterIrp->Type;
+LABEL_16:
+          v6 = ZwUnmapViewOfSection((HANDLE)0xFFFFFFFFFFFFFFFFi64, Type);
+          break;
+        }
+      }
+      else if ( CurrentStackLocation->Parameters.Create.Options >= 8 )
+      {
+        Type = *(void **)a2->AssociatedIrp.MasterIrp;
+        goto LABEL_16;
+      }
+      v6 = -1073741670;
+      break;
+    case 0xA0406400:
+    case 0xA0406404:
+      goto LABEL_12;
+  }
+LABEL_42:
+  a2->IoStatus.Status = v6;
+  IofCompleteRequest(a2, 0);
+  return (unsigned int)v6;
+}
